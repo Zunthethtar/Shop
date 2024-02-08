@@ -38,8 +38,8 @@
                                                             <input class="form-check-input" type="checkbox" id="checkAll" value="option">
                                                         </div>
                                                     </th>
-                                                    <th class="sort" data-sort="name">Name</th>
-                                                    <th class="sort" data-sort="sub_category">Sub Category</th>
+                                                    <th class="sort" data-sort="name">SubCategory</th>
+                                                    <th class="sort" data-sort="category">Category</th>
 
                                                     <th class="sort">Actions</th>
                                                 </tr>

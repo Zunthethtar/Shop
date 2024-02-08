@@ -27,6 +27,8 @@
 
         @include('header')
         @include('nav')
+        @yield('content')
+        
         @include('footer')
     
 
@@ -37,6 +39,40 @@
 
     <!-- Template Javascript -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <!-- Your other HTML code -->
+
+<!-- ... -->
+<script>
+    document.getElementById('cartButton').addEventListener('click', function() {
+        window.location.href = "{{ route('cart') }}";
+    });
+
+    $(document).ready(function () {
+        $(".add-to-cart-btn").click(function (e) {
+            e.preventDefault();
+            var productId = $(this).data('product-id');
+            
+            $.ajax({
+                url: '{{ url('admin/add-to-cart') }}/' + productId,
+                method: 'GET',
+                success: function (response) {
+                    // Display success message
+                    alert('Product added to cart: ' + response.productName);
+                    
+                    // Update the cart badge value
+                    $('#cart-badge').text(response.cartCount);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+<!-- ... -->
+
+    
+
 </body>
 
 </html>

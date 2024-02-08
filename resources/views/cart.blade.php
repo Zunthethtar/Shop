@@ -41,16 +41,28 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="5" class="text-right"><h3><strong>Total ${{ $total }}</strong></h3></td>
+            <td colspan="5" class="text-right">
+                <h3><strong>Total $<span id="totalAmount">{{ $total }}</span></strong></h3>
+            </td>
         </tr>
         <tr>
             <td colspan="5" class="text-right">
-                <a href="{{ url('UI/products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+                <a href="{{ url('admin/UI/products') }}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a>
                 <form  method="POST" action="{{ route('check') }}">
                     @csrf
                     <button class="btn btn-success">Checkout</button>
-
                 </form>
+                <form action="{{ route('apply.coupon') }}" method="post" class="mt-3">
+                    @csrf
+                    <div class="input-group">
+                        <input type="text" name="coupon_code" class="form-control" placeholder="Enter Coupon Code" 
+                            value="{{ session('applied_coupon') ? session('applied_coupon')->code : '' }}">
+                        <button type="submit" class="btn btn-primary ml-2">Apply Coupon</button>
+                    </div>
+                </form>
+                @if(session('applied_coupon'))
+                    <p class="mt-2">Discount Applied: {{ session('applied_coupon')->discount_percentage }}%</p>
+                @endif
             </td>
         </tr>
     </tfoot>
@@ -100,4 +112,6 @@
     });
   
 </script>
+
+
 @endsection

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OwnerController;
 use App\Http\Controllers\ProductController;
@@ -33,7 +34,19 @@ Route::prefix('admin')->group(function () {
     Route::get('add-to-cart/{id}', [UIProductController::class, 'addToCart'])->name('add.to.cart');
     Route::patch('update-cart', [UIProductController::class, 'update'])->name('update.cart');
     Route::delete('remove-from-cart', [UIProductController::class, 'remove'])->name('remove.from.cart');
-    Route::post('checkout',[UIProductController::class,'checkout'])->name('checkout')->middleware('auth');
+    Route::post('checkout',[UIProductController::class,'checkout'])->name('check')->middleware('auth');
+    Route::post('/apply-coupon', [CouponController::class, 'applyCoupon'])->name('apply.coupon');
+    Route::post('/cancel-coupon', [CouponController::class, 'cancelCoupon'])->name('cancel.coupon');
+
+
+    // Coupon Routes
+    Route::get('/coupons', [CouponController::class, 'index'])->name('coupons.index');
+    Route::get('/coupons/create', [CouponController::class, 'create'])->name('coupons.create');
+    Route::post('/coupons/store', [CouponController::class, 'store'])->name('coupons.store');
+    Route::get('/coupons/{coupon}/edit', [CouponController::class, 'edit'])->name('coupons.edit');
+    Route::post('/coupons/update/{id}', [CouponController::class, 'update'])->name('coupons.update');
+    Route::get('/coupons/{coupon}/delete/', [CouponController::class, 'delete'])->name('coupons.delete');
+
         // Product Routes
         Route::get('/products/index',[ProductController::class,'index']);
         Route::get('/products/create',[ProductController::class,'create']);
